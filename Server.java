@@ -108,11 +108,11 @@ public class SocketServer extends Thread{
                               book.setTitle(submit);
                         }
                         else if (data[0].equals("AUTHOR") && submit.length()>=1){
-                              book.setAuthor(submit)
+                              book.setAuthor(submit);
                         }
                         
                        else if (data[0].equals("PUBLISHER") && submit.length()>=1){
-                             book.setPublisher(submit)
+                             book.setPublisher(submit);
                        }
                       else if (data[0].equals("YEAR") && submit.length()>=1){
                                book.setYEAR(Integer.parseInt(data[1]));
@@ -129,14 +129,14 @@ public class SocketServer extends Thread{
             return serverMessage;           
       }
                   
-      private String getRequest(String []requestData){
-            ArrayList<ArrayList<BookSubmission>> bookList = new ArrayList<>():
-            String serverMessage = new StringBuilder();
+      private String getRequest(String[] requestData){
+            ArrayList<ArrayList<BookSubmission>> bookList = new ArrayList<>();
+            StringBuilder serverMessage = new StringBuilder();
             String message = "";
             for(String line : requestData){
-                  line = line.trim():
+                  line = line.trim();
                   String data = line.split(" ");
-                  String submit = line.substring(data[0].length()).trim():
+                  String submit = line.substring(data[0].length()).trim();
                   if(data[0].equals("ALL")){
                         for(bookSubmission bookSubmission : bookSubmissions){
                               serverMessage.append(bookSubmission.toString());
@@ -178,10 +178,9 @@ public class SocketServer extends Thread{
                   serverMessage.append(bookSubmission.toString());
                   serverMessage.append("\n");
             }
-            return serverMessage.toString();; 
-                    
-            
+            return serverMessage.toString();                    
       }
+      
       private String removeRequest(String []requestData){
             String serverMessage = "";
             BookSubmission book = null;
@@ -190,26 +189,26 @@ public class SocketServer extends Thread{
                   line = line.trim();
                   String[] data = line.split(" ");
                   String submit = line.substring(data[0].length()).trim();
-                  if(data[0].equals("ISBN") && submit.length >=1){
+                  if(data[0].equals("ISBN") && submit.length() >=1){
                          book = Lookup.lookupISBN(bookSubmissions, submit);
                          
                          bookList.add(Lookup.lookup(bookSubmissions, "ISBN", submit));
                         
                         }          
-                  else if (data[0].equals("TITLE")&& submit.length >=1){
+                  else if (data[0].equals("TITLE")&& submit.length() >=1){
                          bookList.add(Lookup.lookup(bookSubmissions, "TITLE", submit));
 
                         }
-                  else if (data[0].equals("AUTHOR")&& submit.length >=1){
+                  else if (data[0].equals("AUTHOR")&& submit.length() >=1){
                          bookList.add(Lookup.lookup(bookSubmissions, "AUTHOR", submit));
 
                         }
                         
-                   else if (data[0].equals("PUBLISHER")&& submit.length >=1){
+                   else if (data[0].equals("PUBLISHER")&& submit.length() >=1){
                          bookList.add(Lookup.lookup(bookSubmissions, "PUBLISHER", submit));
                 
                        }
-                   else if (data[0].equals("YEAR")&& submit.length >=1){
+                   else if (data[0].equals("YEAR")&& submit.length() >=1){
                          bookList.add(Lookup.lookup(bookSubmissions, "YEAR", submit));
 
                      }
@@ -231,7 +230,7 @@ public class SocketServer extends Thread{
                     }
                     }
             
-                serverMessage = "The book(s) have been removed from the directory"
+                serverMessage = "The book(s) have been removed from the directory";
                 return serverMessage; 
       }
 

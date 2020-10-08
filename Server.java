@@ -3,13 +3,13 @@ import java.io.*;
 import java.util.*;
 
 public class SocketServer extends Thread{
-      Private ArrayList<BookSubmission> bookSubmissions;
+      private ArrayList<BookSubmission> bookSubmissions;
 
       private ServerSocket serverSocket;
       private int port;
       private boolean isRunning= false;
 
-    public ServerSocket(int port, ServerSocket serverSocket, ArrayList<BookSubmission> bookSubmissions ){
+    public SocketServer(int port, ServerSocket serverSocket, ArrayList<BookSubmission> bookSubmissions ){
         this.port = port;
         this.serverSocket = serverSocket;
         this.bookSubmissions = bookSubmissions; 
@@ -34,7 +34,7 @@ public class SocketServer extends Thread{
             this.serverSocket = new ServerSocket(port);
             this.start(); 
         } catch (IOException e) {
-            throw new RuntimeException("Cannot open port ", port);
+            e.printStackTrace();
         }
     }
 
@@ -49,53 +49,49 @@ public class SocketServer extends Thread{
                 startRunning(); 
              } catch (IOException e) {
                 e.printStackTrace();
-                }
-                throw new RuntimeException("Error accepting client connection", e);
+            }
             }
         
 
-      private String submitRequest(String []requestData){
-     
-            String serverMessage;
-            String submit = "":
+      private String submitRequest(String[] requestData){
+            String serverMessage = "";
+            String submit = "";
             BookSubmission bookSubmission = new BookSubmission();
             for (String line : requestData){
                   String[] data = line.split(" "); 
                   if (data[0].equals("ISBN")){
-                        if(Lookup.lookupISBN(bookSubmissions, data[1] != null){
-                              serverMessage = "ISBN already exists in directory";
+                        if(Lookup.lookupISBN(bookSubmissions, data[1] != null)){
+                              serverMessage = ("ISBN already exists in directory");
                               return serverMessage;
                         }
                         else{
                         bookSubmission.setISBN(data[1]);
                         }
                     }
-                              
                     else if (data[0].equals("TITLE")){
                               submit = line.substring(data[0].length()).trim();
                               bookSubmission.setTitle(submit);
-
                         }
                     else if (data[0].equals("AUTHOR")){
                               submit = line.substring(data[0].length()).trim();
-                              bookSubmission. setAuthor(submit)
+                              bookSubmission.setAuthor(submit);
                         }
-                        
                        else if (data[0].equals("PUBLISHER")){
                              submit = line.substring(data[0].length()).trim();
-                             bookSubmission.setPublisher(submit)
+                             bookSubmission.setPublisher(submit);
                        }
                      else if (data[0].equals("YEAR")){
                                bookSubmission.setYEAR(Integer.parseInt(data[1]));
                      }
                         }
-                        }
+                        
                             
-                     serverMessage = "The entry with ISBN code " + ISBN+" has been added to the bibliography successfully.");
+                     serverMessage = ("The entry has been added to the bibliography successfully.");
                      bookSubmissions.add(bookSubmission); 
                      return serverMessage;  
                      }
                   
+      
       private String updateRequest(String []requestData){
             String serverMessage = "";
             BookSubmission book = null;

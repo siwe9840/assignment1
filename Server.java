@@ -3,14 +3,11 @@ import java.io.*;
 import java.util.*;
 
 public class SocketServer extends Thread{
-      private ArrayList<BookSubmission> bookSubmissions;
-
-      private ServerSocket serverSocket;
-      private int port;
+      private final ArrayList<BookSubmission> bookSubmissions;
+      private final ServerSocket serverSocket;
       private boolean isRunning= false;
 
-    public SocketServer(int port, ServerSocket serverSocket, ArrayList<BookSubmission> bookSubmissions ){
-        this.port = port;
+    public SocketServer(ServerSocket serverSocket, ArrayList<BookSubmission> bookSubmissions ){
         this.serverSocket = serverSocket;
         this.bookSubmissions = bookSubmissions; 
     }
@@ -31,8 +28,11 @@ public class SocketServer extends Thread{
 
     private void openServerSocket() {
         try {
-            this.serverSocket = new ServerSocket(port);
-            this.start(); 
+          DataInputStream din = new DataInputStream(serverSocket.getInputStream());
+          DataOutputStream dout = new DataOutputStream(serverSocket.getOutputStream());
+          BufferedReader br = newBufferedReader(new InputStreamReader());
+          startRunning(); 
+              
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,7 +92,7 @@ public class SocketServer extends Thread{
                      }
                   
       
-      private String updateRequest(String []requestData){
+      private String updateRequest(String[] requestData){
             String serverMessage = "";
             BookSubmission book = null;
             for (String line : requestData){
@@ -238,12 +238,7 @@ public class SocketServer extends Thread{
       {
             try
             {
-            System.out.println("Connection Accepted");
-                  DataInputStream din = new DataInputStream(socket.getInputStream());
-                  DataOutputStream dout = new DataOutputStream(socket.getOutputStream());
-                  BufferedReader br = newBufferedReader(new InputStreamReader());
-                 
-                  dout.println("Enter a Request or "Stop" to end session: ");
+                  dout.println("Enter a request or 'Stop' to end session");
                   dout.flush(); 
                   String line = "";
                   String serverMessage = "";
@@ -257,36 +252,37 @@ public class SocketServer extends Thread{
                               
                               String request = clientMessage[0].trim();
                               clientMessage = clientMessage.split(("\n").trim()+"\r\n\\EOF");
-                              if(request.equals("SUBMIT"){
+                              if(request.equals("SUBMIT")){
                                     serverMessage = submitRequest(clientMessage);
 
                               }
-                              else if(request.equals("UPDATE"){
+                              else if(request.equals("UPDATE")){
                                     serverMessage = updateRequest(clientMessage);
 
                               }
-                              else if(request.equals("GET"){
+                              else if(request.equals("GET")){
                                     serverMessage = getRequest(clientMessage);
                               }
-                              else if(request.equals("REMOVE"){
+                              else if(request.equals("REMOVE")){
                                     serverMessage = removeRequest(clientMessage);
                               }
-                             else if(request.equals(""){
-                                    dout.println("No request identified.")
+                             else if(request.equals("")){
+                                    dout.println("No request identified.");
                                     dout.flush();
                               }
-                              else if (request.equals("Stop"){
+                              else if (request.equals("Stop")){
                                     dout.println("Stopping connection");
                                     dout.flush();
                                     stopServer();
+                              }
                               else{
                                     dout.println("Request not recognized.");
-                                    dout.flush()
+                                    dout.flush();
                                                  }
                               
                         dout.println(serverMessage);
                         dout.flush(); 
-                        dout.println("Enter another Request or "Stop" to end session: ");
+                        dout.println("Enter another Request or 'Stop' to end session: ");
                         dout.flush(); 
                         line = in.readLine(); 
                                                  

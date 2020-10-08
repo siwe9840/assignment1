@@ -134,16 +134,16 @@ public class GUI extends JFrame{
           //send request and update response box with server response
 		if(REQUESTtxt.getText().toLowerCase().trim() == "submit") {
 		
-			RESPONSEtxt.setText(socketClient.sendRequest(Request.SUBMIT, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
+			RESPONSEtxt.setText(socketClient.sendMessage(Request.SUBMIT, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
 		}
 		if(REQUESTtxt.getText().toLowerCase().trim() == "get") {
-			RESPONSEtxt.setText(socketClient.sendRequest(Request.GET, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
+			RESPONSEtxt.setText(socketClient.sendMessage(Request.GET, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
 		}
 		if(REQUESTtxt.getText().toLowerCase().trim() == "remove") {
-			RESPONSEtxt.setText(socketClient.sendRequest(Request.REMOVE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
+			RESPONSEtxt.setText(socketClient.sendMessage(Request.REMOVE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
 		}
 		if(REQUESTtxt.getText().toLowerCase().trim() == "update") {
-			RESPONSEtxt.setText(socketClient.sendRequest(Request.UPDATE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
+			RESPONSEtxt.setText(socketClient.sendMessage(Request.UPDATE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
 
 		}
 		

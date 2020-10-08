@@ -81,7 +81,7 @@ public class SocketClient
 public SendMessage( Request request, String ISBN, String TITLE, String AUTHOR, String PUBLISHER, int YEAR,
                               boolean all){
 	String processedRequest = processRequest(request, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, all);
-	dout.println(requestData + "\r\n\\EOF");
+	dout.println(processRequest + "\r\n\\EOF");
 }
 	
 	

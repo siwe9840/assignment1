@@ -11,5 +11,40 @@ public class Lookup{
               return null;
               }
              }
+    public static ArrayList<BookSubmission> lookup(ArrayList<BookSubmission> bookSubmissions, String value, String submit){
+              ArrayList<BookSubmission> books = new ArrayList<>():
+              for (BookSubmission bookSubmission : bookSubmissions){
+                  if(value.equals("ISBN")){  
+                      if(bookSubmission.getISBN().equals(submit)){
+                            books.add(bookSubmission);
+                        }
+                  }
+                  else if (value.equals("TITLE")){
+                       if(bookSubmission.getTitle().equals(submit)){
+                            books.add(bookSubmission);
+                        }
+                  }
+                  else if (value.equals("AUTHOR")){
+                       if(bookSubmission.getAuthor().equals(submit)){
+                              books.add(bookSubmission);
+                        }
+                  }
+                  else if (value.equals("PUBLISHER")){
+                      if(bookSubmission.getPublisher().equals(submit)){
+                            books.add(bookSubmission);
+                        }
+                  }
+                  else if (value.equals("YEAR")){
+                      if(bookSubmission.getYear().equals(submit)){
+                            books.add(bookSubmission);
+                        }
+                  }
+                  if(books.size()==0){
+                    books = null;
+                    }
+                  return books; 
              
+             }
+             
+             }
      

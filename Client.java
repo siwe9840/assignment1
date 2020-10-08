@@ -37,8 +37,7 @@ public class SocketClient
 		
 	public String processMessage(Request request, String ISBN, String TITLE, String AUTHOR, String PUBLISHER, int YEAR, boolean all){
 		String requestData= request.name() + "\r\n";
-		String serverResponse = "";
-		String line = din.readLine();
+
 		if (all){
 			requestData = requestData + "ALL";
 		}
@@ -46,10 +45,7 @@ public class SocketClient
 			requestData = requestData + "ISBN: " + ISBN + "\r\n" + "TITLE: " + TITLE + "\r\n" + "AUTHOR: " + AUTHOR + "\r\n" + "PUBLISHER: " + PUBLISHER + "\r\n" + "YEAR: " + YEAR + "\r\n";
 			}
 		    		
-		while(line!=null && !line.contains("\\EOF")){
-			serverResponse = serverResponse.concat(line + "\r\n");
-           		line = din.readLine();
-		}
+
 		
 		String[] split = serverResponse.split("\r\n");
 		   for (String data : split) {
@@ -78,10 +74,26 @@ public class SocketClient
 		e.printStackTrace(); 		
         }	
         }
-public SendMessage( Request request, String ISBN, String TITLE, String AUTHOR, String PUBLISHER, int YEAR,
+public String SendMessage( Request request, String ISBN, String TITLE, String AUTHOR, String PUBLISHER, int YEAR,
                               boolean all){
 	String processedRequest = processRequest(request, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, all);
 	dout.println(processRequest + "\r\n\\EOF");
+	String response = getServerResponse();
+
+	return response;
+	
+
+}
+public String getServerResponse{
+	String serverResponse = "";
+	String line = din.readLine();
+	
+	while(line!=null && !line.contains("\\EOF")){
+		serverResponse = serverResponse.concat(line + "\r\n");
+           	line = din.readLine();
+		}
+	return serverResponse;
+
 }
 	
 	

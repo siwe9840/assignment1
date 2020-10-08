@@ -50,12 +50,9 @@ public class SocketServer extends Thread{
              } catch (IOException e) {
                 e.printStackTrace();
                 }
-                throw new RuntimeException(
-                    "Error accepting client connection", e);
+                throw new RuntimeException("Error accepting client connection", e);
             }
-        }
-        System.out.println("Server Stopped.") ;
-    }
+        
 
       private String submitRequest(String []requestData){
      
@@ -149,35 +146,46 @@ public class SocketServer extends Thread{
                   if(data[0].equals("ISBN") && submit.length >=1){
                          book = Lookup.lookupISBN(bookSubmissions, submit);
                          
-                         bookList.add()
+                         bookList.add(Lookup.lookup(bookSubmissions, "ISBN", submit));
                         
                         }          
                   else if (data[0].equals("TITLE")&& submit.length >=1){
-                        bookList.add()
+                         bookList.add(Lookup.lookup(bookSubmissions, "TITLE", submit));
 
                         }
                   else if (data[0].equals("AUTHOR")&& submit.length >=1){
-                        bookList.add()
+                         bookList.add(Lookup.lookup(bookSubmissions, "AUTHOR", submit));
 
                         }
                         
                    else if (data[0].equals("PUBLISHER")&& submit.length >=1){
-                         bookList.add()
+                         bookList.add(Lookup.lookup(bookSubmissions, "PUBLISHER", submit));
                 
                        }
                    else if (data[0].equals("YEAR")&& submit.length >=1){
-                         bookList.add()
+                         bookList.add(Lookup.lookup(bookSubmissions, "YEAR", submit));
 
                      }
                         }
             
                 if(book == null){
-                    serverMessage = "Cannot find book to be removed";
-                    return serverMessage; 
+                    serverMessage = "Cannot find a book to be removed";
+                        return serverMessage; 
                          }
             
-                serverMessage = "Book has been removed from the directory"
-                returnMessage; 
+                  
+              ArrayList<ArrayList<BookSubmission>> intersection = new ArrayList<>();
+              intersection.addAll(Arrays.asList(bookSubmissions));
+              intersection.retainAll(Arrays.asList(bookList));
+              if (intersection !=null)
+              {
+                    for(BookSubmission bookSubmission : intersection){
+                          bookSubmissions.remove(bookSubmission);
+                    }
+                    }
+            
+                serverMessage = "The book(s) have been removed from the directory"
+                return serverMessage; 
       }
 
       public void startRunning()

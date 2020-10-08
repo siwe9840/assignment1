@@ -6,7 +6,7 @@ public class GUI extends JFrame{
   Have NOT tested with the other files 
 	  
   ----------------------------------------*/
-  private final SocketServer socketServer;
+  private final SocketClient socketClient;
 	/**
 	 * 
 	 */
@@ -123,26 +123,27 @@ public class GUI extends JFrame{
           String YEAR = YEARtxt.getText().trim();
           if (YEARtxt.getText().length() > 0)
               try {
-                  //YEAR = Integer.parseInt(YEARtxt.getText());
+                  int YEAR = Integer.parseInt(YEARtxt.getText());
               } catch (NumberFormatException exception) {
                   JOptionPane.showMessageDialog(this, "Invalid Year", "Error", JOptionPane.ERROR_MESSAGE);
                   return;
               }
       
-        	String[] reqData = {ISBN, TITLE, AUTHOR, PUBLISHER, YEAR};
+        	//String[] reqData = {ISBN, TITLE, AUTHOR, PUBLISHER, YEAR};
         
           
 		if(REQUESTtxt.getText().toLowerCase().trim() == "submit") {
-			socketServer.submitRequest(reqData);
+			socketClient.sendRequest(Request.SUBMIT, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true );
 		}
 		if(REQUESTtxt.getText().toLowerCase().trim() == "get") {
-			socketServer.getRequest(reqData);
+			socketClient.sendRequest(Request.GET, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true );
 		}
 		if(REQUESTtxt.getText().toLowerCase().trim() == "remove") {
-			socketServer.updateRequest(reqData);
+			socketClient.sendRequest(Request.REMOVE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true );
 		}
 		if(REQUESTtxt.getText().toLowerCase().trim() == "update") {
-			
+			socketClient.sendRequest(Request.UPDATE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true );
+
 		}
 		
 	}	

@@ -57,8 +57,6 @@ public class SocketServer extends Thread{
         System.out.println("Server Stopped.") ;
     }
 
-
-
       private String submitRequest(String []requestData){
      
             String serverMessage;
@@ -78,17 +76,17 @@ public class SocketServer extends Thread{
                               
                     else if (data[0].equals("TITLE")){
                               submit = line.substring(data[0].length()).trim();
-                              bookSubmission.setTITLE(submit);
+                              bookSubmission.setTitle(submit);
 
                         }
                     else if (data[0].equals("AUTHOR")){
                               submit = line.substring(data[0].length()).trim();
-                              bookSubmission. setAUTHOR(submit)
+                              bookSubmission. setAuthor(submit)
                         }
                         
                        else if (data[0].equals("PUBLISHER")){
                              submit = line.substring(data[0].length()).trim();
-                             bookSubmission.setPUBLISHER(submit)
+                             bookSubmission.setPublisher(submit)
                        }
                      else if (data[0].equals("YEAR")){
                                bookSubmission.setYEAR(Integer.parseInt(data[1]));
@@ -114,14 +112,14 @@ public class SocketServer extends Thread{
                  
                   if (book!=null){
                         if (data[0].equals("TITLE") && submit.length()>=1){
-                              book.setTITLE(submit);
+                              book.setTitle(submit);
                         }
                         else if (data[0].equals("AUTHOR") && submit.length()>=1){
-                              book.setAUTHOR(submit)
+                              book.setAuthor(submit)
                         }
                         
                        else if (data[0].equals("PUBLISHER") && submit.length()>=1){
-                             book.setPUBLISHER(submit)
+                             book.setPublisher(submit)
                        }
                       else if (data[0].equals("YEAR") && submit.length()>=1){
                                book.setYEAR(Integer.parseInt(data[1]));
@@ -243,7 +241,7 @@ public class SocketServer extends Thread{
                                   e.printStackTrace();
                                      
                   }
-                                                 }
+              }
 
                  
                   

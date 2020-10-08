@@ -134,6 +134,57 @@ public class SocketServer extends Thread{
       }
                   
       private String getRequest(String []requestData){
+            ArrayList<ArrayList<BookSubmission>> bookList = new ArrayList<>():
+            String serverMessage = new StringBuilder();
+            String message = "";
+            for(String line : requestData){
+                  line = line.trim():
+                  String data = line.split(" ");
+                  String submit = line.substring(data[0].length()).trim():
+                  if(data[0].equals("ALL")){
+                        for(bookSubmission bookSubmission : bookSubmissions){
+                              serverMessage.append(bookSubmission.toString());
+                              serverMessage.append("\n");
+                        }
+                        if(serverMessage.length() == 0){
+                              message = "No books found";
+                              return message; 
+                        }
+                              
+                        return serverMessage.toString();
+                  }
+                  else if(data[0].equals("ISBN")){
+                        bookList.add(Lookup.lookup(bookSubmissions, "ISBN", submit));
+
+                  }
+                  else if(data[0].equals("TITLE")){
+                        bookList.add(Lookup.lookup(bookSubmissions, "TITLE", submit));
+                  }
+                  else if(data[0].equals("AUTHOR")){
+                        bookList.add(Lookup.lookup(bookSubmissions, "AUTHOR", submit));
+                  }
+                  else if(data[0].equals("PUBLISHER")){
+                        bookList.add(Lookup.lookup(bookSubmissions, "PUBLISHER", submit));
+                  }
+                  else if(data[0].equals("YEAR")){
+                        bookList.add(Lookup.lookup(bookSubmissions, "YEAR", submit));
+                  }
+            }
+            
+              ArrayList<ArrayList<BookSubmission>> intersection = new ArrayList<>();
+              intersection.addAll(Arrays.asList(bookSubmissions));
+              intersection.retainAll(Arrays.asList(bookList));       
+              if(intersection == null){
+                     message = "No books were found";
+                    return message;
+              }
+            for(BookSubmission bookSubmission : intersection){
+                  serverMessage.append(bookSubmission.toString());
+                  serverMessage.append("\n");
+            }
+            return serverMessage.toString();; 
+                    
+            
       }
       private String removeRequest(String []requestData){
             String serverMessage = "";

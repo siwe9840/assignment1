@@ -21,6 +21,7 @@ public class SocketServer extends Thread{
         din.close();
         dout.close();
         serverSocket.close(); 
+        this.interrupt();
           }
            catch( Exception e){
                   System.out.println("Connection was not properly closed"); 
@@ -37,19 +38,16 @@ public class SocketServer extends Thread{
         }
     }
 
-    public void startRunning(){
+    public void run(){
         synchronized(this){
         }
         openServerSocket();
-        isRunning = true; 
-        while(isRunning){
+        this.isRunning = true; 
             try {
-     
                 System.out.println("waiting for a connection");
                 Socket socket = this.serverSocket.accept();
-                RequestHandler requestHandler = new RequestHandler(socket);
-                requestHandler.start();
-            } catch (IOException e) {
+                startRunning(); 
+             } catch (IOException e) {
                 e.printStackTrace();
                 }
                 throw new RuntimeException(
@@ -59,55 +57,129 @@ public class SocketServer extends Thread{
         System.out.println("Server Stopped.") ;
     }
 
+
+
       private String submitRequest(String []requestData){
      
             String serverMessage;
-            String submission = "":
-            BookSubmission bookSubmissions = new BookSubmission();
+            String submit = "":
+            BookSubmission bookSubmission = new BookSubmission();
             for (String line : requestData){
-                  String[] words = line.split(" ");
-                  
-                 switch(words[0]){
-                        case "ISBN":
-            
-                        if(IsbnLookup(bookSubmission, words[1] != null){
-                              message = "ISBN already exists in directory";
-                              return message;
-                              }
-                         bookSubmission.setISBN(words[1]);
-                        break;
+                  String[] data = line.split(" "); 
+                  if (data[0].equals("ISBN")){
+                        if(Lookup.lookupISBN(bookSubmissions, data[1] != null){
+                              serverMessage = "ISBN already exists in directory";
+                              return serverMessage;
+                        }
+                        else{
+                        bookSubmission.setISBN(data[1]);
+                        }
+                    }
                               
-                        case "TITLE":
-                              submission = line.substring(words[0].length()).trim();
-                              bookSubmission.setTITLE(submission);
-                        break;
-                        
-                        case "AUTHOR":
-                              submission = line.substring(words[0].length()).trim();
-                              bookSubmission = set.AUTHOR(submission)
-                        break;
-                        
-                        case "PUBLISHER":
-                             submission = line.substring(words[0].length()).trim();
-                             bookSubmission = setPUBLISHER(submission)
-                        break;
-                        
-                        case "YEAR":
-                               bookSubmission.setYEAR(Integer.parseInt(words[1]));
+                    else if (data[0].equals("TITLE")){
+                              submit = line.substring(data[0].length()).trim();
+                              bookSubmission.setTITLE(submit);
 
-                        break;
+                        }
+                    else if (data[0].equals("AUTHOR")){
+                              submit = line.substring(data[0].length()).trim();
+                              bookSubmission. setAUTHOR(submit)
+                        }
+                        
+                       else if (data[0].equals("PUBLISHER")){
+                             submit = line.substring(data[0].length()).trim();
+                             bookSubmission.setPUBLISHER(submit)
+                       }
+                     else if (data[0].equals("YEAR")){
+                               bookSubmission.setYEAR(Integer.parseInt(data[1]));
+                     }
                         }
                         }
-                        message = "The entry with ISBN code " + ISBN+" has been added to the bibliography successfully.");
-                        bookSubmission.add(bookSubmission); 
-                        return message;  
-                   
+                            
+                     serverMessage = "The entry with ISBN code " + ISBN+" has been added to the bibliography successfully.");
+                     bookSubmissions.add(bookSubmission); 
+                     return serverMessage;  
+                     }
+                  
+      private String updateRequest(String []requestData){
+            String serverMessage = "";
+            BookSubmission book = null;
+            for (String line : requestData){
+                  line = line.trim();
+                  String [] data = line.split(" ");
+                  String submit = line.substring(data[0].length()).trim();
+                  if (data[0].equals("ISBN")){
+                        book = Lookup.lookupISBN(bookSubmissions, submit);
+                        }
+                 
+                  if (book!=null){
+                        if (data[0].equals("TITLE") && submit.length()>=1){
+                              book.setTITLE(submit);
+                        }
+                        else if (data[0].equals("AUTHOR") && submit.length()>=1){
+                              book.setAUTHOR(submit)
+                        }
+                        
+                       else if (data[0].equals("PUBLISHER") && submit.length()>=1){
+                             book.setPUBLISHER(submit)
+                       }
+                      else if (data[0].equals("YEAR") && submit.length()>=1){
+                               book.setYEAR(Integer.parseInt(data[1]));
+                     }
+                        }
+                        }
+            if(book !=null)
+            {
+                  serverMessage = "The book was succesfully updated!";
+            }
+            else{
+                  serverMessage = "The book does not exist in the directory";
+            }
+            return serverMessage;           
       }
-      private String updateRequest(){
+                  
+      private String getRequest(String []requestData){
       }
-      private String getRequest(){
-      }
-      private String removeRequest(){
+      private String removeRequest(String []requestData){
+            String serverMessage = "";
+            BookSubmission book = null;
+            ArrayList<ArrayList<BookSubmission>> bookList = new ArrayList<>();
+            for (String line : requestData){
+                  line = line.trim();
+                  String[] data = line.split(" ");
+                  String submit = line.substring(data[0].length()).trim();
+                  if(data[0].equals("ISBN") && submit.length >=1){
+                         book = Lookup.lookupISBN(bookSubmissions, submit);
+                         
+                         bookList.add()
+                        
+                        }          
+                  else if (data[0].equals("TITLE")&& submit.length >=1){
+                        bookList.add()
+
+                        }
+                  else if (data[0].equals("AUTHOR")&& submit.length >=1){
+                        bookList.add()
+
+                        }
+                        
+                   else if (data[0].equals("PUBLISHER")&& submit.length >=1){
+                         bookList.add()
+                
+                       }
+                   else if (data[0].equals("YEAR")&& submit.length >=1){
+                         bookList.add()
+
+                     }
+                        }
+            
+                if(book == null){
+                    serverMessage = "Cannot find book to be removed";
+                    return serverMessage; 
+                         }
+            
+                serverMessage = "Book has been removed from the directory"
+                returnMessage; 
       }
 
       public void startRunning()
@@ -156,7 +228,7 @@ public class SocketServer extends Thread{
                                     dout.flush();
                                     stopServer();
                               else{
-                                    dout.println("Request not recognized."
+                                    dout.println("Request not recognized.");
                                     dout.flush()
                                                  }
                               
@@ -171,7 +243,6 @@ public class SocketServer extends Thread{
                                   e.printStackTrace();
                                      
                   }
-                    System.out.println("Connection has been closed");
                                                  }
 
                  
@@ -185,15 +256,12 @@ public class SocketServer extends Thread{
             port =5000;
             }
             else port = Integer.parseInt(arg[0]);
-            ServerSocket = serverSocket = new ServerSocket(port);
-            System.out.println("Server is now running on port: " +port);
             while (run){ //this part needs editing
-                  Socket clientSocket = serverSocket.accept();
            
                   SocketServer socketServer = new SocketServer(Thread.activeCount()+"",clientSocket,bookSubmission);
                   socketServer.start();
-                  System.out.println("Connected"); 
-                  }
+                  run(): 
+                              }
            }
        }
 

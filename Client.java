@@ -74,7 +74,7 @@ public class SocketClient
 		e.printStackTrace(); 		
         }	
         }
-public String SendMessage( Request request, String ISBN, String TITLE, String AUTHOR, String PUBLISHER, int YEAR,
+public String sendMessage( Request request, String ISBN, String TITLE, String AUTHOR, String PUBLISHER, int YEAR,
                               boolean all){
 	String processedRequest = processRequest(request, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, all);
 	dout.println(processRequest + "\r\n\\EOF");

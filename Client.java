@@ -7,6 +7,9 @@ public class SocketClient
 {
 	private Socket clientSocket; 
 	
+	private DataInputStream  din   = null; 
+	private DataOutputStream dout     = null; 
+	
 	public void stopConnection() throws IOException{
 		din.close();
 		dout.close();
@@ -22,8 +25,8 @@ public class SocketClient
 		Socket clientSocket = new Socket():
 		SocketAddress socketAddress = new InetSocketAddress(location,port);
 		clientSocket.connect(socketAddress);
-		InputStream din = new DataInputStream(clientSocket.getInputStream());
-		OutputStream dout = new DataOutputStream(clientSocket.getOutputStream());
+		 din = new DataInputStream(clientSocket.getInputStream());
+		 dout = new DataOutputStream(clientSocket.getOutputStream());
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	} catch(IOException e){
 		e.printStackTrace();
@@ -75,6 +78,11 @@ public class SocketClient
 		e.printStackTrace(); 		
         }	
         }
+public SendMessage( Request request, String ISBN, String TITLE, String AUTHOR, String PUBLISHER, int YEAR,
+                              boolean all){
+	String processedRequest = processRequest(request, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, all);
+	dout.println(requestData + "\r\n\\EOF");
+}
 	
 	
 public class mainClient{

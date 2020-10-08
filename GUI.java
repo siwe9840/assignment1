@@ -43,7 +43,7 @@ public class GUI extends JFrame{
 
 	public static JTextField REQUESTtxt = new JTextField();
 
-	public static JTextField p4 = new JTextField();
+	public static JTextField RESPONSEtxt = new JTextField();
 	
 	public static JTextField ISBNtxt = new JTextField();
 	public static JTextField TITLEtxt = new JTextField(); 
@@ -105,7 +105,7 @@ public class GUI extends JFrame{
 	this.add(SubmitButton);
 	this.add(Clear);
 	this.add(Response_label);
-	this.add(p4);	
+	this.add(RESPONSEtxt);	
 	
 
 		
@@ -131,18 +131,19 @@ public class GUI extends JFrame{
       
         	//String[] reqData = {ISBN, TITLE, AUTHOR, PUBLISHER, YEAR};
         
-          
+          //send request and update response box with server response
 		if(REQUESTtxt.getText().toLowerCase().trim() == "submit") {
-			socketClient.sendRequest(Request.SUBMIT, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true );
+		
+			RESPONSEtxt.setText(socketClient.sendRequest(Request.SUBMIT, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
 		}
 		if(REQUESTtxt.getText().toLowerCase().trim() == "get") {
-			socketClient.sendRequest(Request.GET, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true );
+			RESPONSEtxt.setText(socketClient.sendRequest(Request.GET, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
 		}
 		if(REQUESTtxt.getText().toLowerCase().trim() == "remove") {
-			socketClient.sendRequest(Request.REMOVE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true );
+			RESPONSEtxt.setText(socketClient.sendRequest(Request.REMOVE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
 		}
 		if(REQUESTtxt.getText().toLowerCase().trim() == "update") {
-			socketClient.sendRequest(Request.UPDATE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true );
+			RESPONSEtxt.setText(socketClient.sendRequest(Request.UPDATE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
 
 		}
 		

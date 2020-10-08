@@ -79,11 +79,7 @@ public class SocketClient
 	
 public class mainClient{
 	public static void main(String[] args){
-		int port;
-		String location;
-		String response = "";
-		connect(port,location):
-		while (entry isnt stop)
+		
 			
 	}
 	}

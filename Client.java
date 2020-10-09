@@ -46,7 +46,7 @@ public class SocketClient
 			}
 		    		
 
-		
+		/*
 		String[] split = serverResponse.split("\r\n");
 		   for (String data : split) {
 			String[] splitLine = x.split(" ");
@@ -66,8 +66,8 @@ public class SocketClient
                             serverResponse = serverResponse.concat("\tYEAR\t= \"" + x.substring(splitLine[0].length()).trim() + "\",\r\n");
                     }
                 }
-		
-		return serverResponse;	
+		*/
+		return requestData;	
         }
 	catch(Exception e)
 	{

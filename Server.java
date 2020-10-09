@@ -4,20 +4,20 @@ import java.util.*;
 
 public class SocketServer extends Thread{
       private final ArrayList<BookSubmission> bookSubmissions;
-      private final ServerSocket serverSocket;
+      private final ClientSocket clientSocket;
       private boolean isRunning= false;
 
-    public SocketServer(ServerSocket serverSocket, ArrayList<BookSubmission> bookSubmissions ){
-        this.serverSocket = serverSocket;
+    public SocketServer(ClientSocket clientSocket, ArrayList<BookSubmission> bookSubmissions ){
+        this.clientSocket = clientSocket;
         this.bookSubmissions = bookSubmissions; 
     }
     
     public synchronized void stopServer(){
         this.isRunning = false;
          try{
-        din.close();
-        dout.close();
-        serverSocket.close(); 
+              din.close();
+              dout.close();
+              serverSocket.close(); 
         this.interrupt();
           }
            catch( Exception e){
@@ -26,32 +26,16 @@ public class SocketServer extends Thread{
                   }
     }
 
-    private void openServerSocket() {
+    private void run() {
+       this.isRunning = true; 
+      System.out.println("Connection accepted. Thread is running.");
         try {
-          DataInputStream din = new DataInputStream(serverSocket.getInputStream());
-          DataOutputStream dout = new DataOutputStream(serverSocket.getOutputStream());
-          BufferedReader br = newBufferedReader(new InputStreamReader());
-          startRunning(); 
-              
+          PrintWriter out = 
+          startRunning();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    public void run(){
-        synchronized(this){
-        }
-        openServerSocket();
-        this.isRunning = true; 
-            try {
-                System.out.println("waiting for a connection");
-                Socket socket = this.serverSocket.accept();
-                startRunning(); 
-             } catch (IOException e) {
-                e.printStackTrace();
-            }
-            }
-        
 
       private String submitRequest(String[] requestData){
             String serverMessage = "";
@@ -282,8 +266,6 @@ public class SocketServer extends Thread{
                               
                         dout.println(serverMessage);
                         dout.flush(); 
-                        dout.println("Enter another Request or 'Stop' to end session: ");
-                        dout.flush(); 
                         line = in.readLine(); 
                                                  
                         }   
@@ -296,22 +278,36 @@ public class SocketServer extends Thread{
                  
                   
  public class mainServer{
+       
       public static void main(String[] args) throws IOException{
-            private boolean run = true; 
-            ArrayList<BookSubmission> bookSubmission = new ArrayList<BookSubmission>();
+            
             int port
             if(args[0].length ==0) {
             port =5000;
             }
-            else port = Integer.parseInt(arg[0]);
-            while (run){ //this part needs editing
-           
-                  SocketServer socketServer = new SocketServer(Thread.activeCount()+"",clientSocket,bookSubmission);
-                  socketServer.start();
-                  run(): 
-                              }
-           }
+            else{
+                  port = Integer.parseInt(arg[0]);
+            }
+            ServerSocket serverSocket = new ServerSocket(port)
+            while(something){
+            run(serverSocket);
+            }
+   
        }
+      public void run(Serversocket serverSocket){
+           ArrayList<BookSubmission> bookSubmissions = new ArrayList<BookSubmission>();
+
+            try{
+                  System.out.println("Waiting to be connected");
+                  ClientSocket clientSocket = serverSocket.accept();
+                  SocketServer socketServer = new SocketServer(clientSocket, bookSubmissions);
+                  socketServer.start();
+            
+      }catch(IOException e){
+                  e.printStackTrace();
+ }
+      }
+ }
 
             
             

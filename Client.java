@@ -20,7 +20,7 @@ public class SocketClient {
 		System.out.println("Conneting to server " +location+ " on port " + port);
 		Socket clientSocket = new Socket();
 		SocketAddress socketAddress = new InetSocketAddress(location,port);
-		clientSocket.connect(socketAddress,port);
+		clientSocket.connect(socketAddress);
 		 din = new DataInputStream(clientSocket.getInputStream());
 		 dout = new DataOutputStream(clientSocket.getOutputStream());
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

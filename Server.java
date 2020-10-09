@@ -47,7 +47,7 @@ public class SocketServer extends Thread{
             for (String line : requestData){
                   String[] data = line.split(" "); 
                   if (data[0].equals("ISBN")){
-                        if(Lookup.lookupISBN(bookSubmissions, data[1] != null)){
+                        if(Lookup.lookupISBN(bookSubmissions, data[1] )!= null){
                               serverMessage = ("ISBN already exists in directory");
                               return serverMessage;
                         }
@@ -122,10 +122,10 @@ public class SocketServer extends Thread{
             String message = "";
             for(String line : requestData){
                   line = line.trim();
-                  String data = line.split(" ");
+                  String []data = line.split(" ");
                   String submit = line.substring(data[0].length()).trim();
                   if(data[0].equals("ALL")){
-                        for(bookSubmission bookSubmission : bookSubmissions){
+                        for(BookSubmission bookSubmission : bookSubmissions){
                               serverMessage.append(bookSubmission.toString());
                               serverMessage.append("\n");
                         }
@@ -161,7 +161,7 @@ public class SocketServer extends Thread{
                      message = "No books were found";
                     return message;
               }
-            for(BookSubmission bookSubmission : intersection){
+            for(ArrayList<BookSubmission> bookSubmission : intersection){
                   serverMessage.append(bookSubmission.toString());
                   serverMessage.append("\n");
             }
@@ -212,7 +212,7 @@ public class SocketServer extends Thread{
               intersection.retainAll(Arrays.asList(bookList));
               if (intersection !=null)
               {
-                    for(BookSubmission bookSubmission : intersection){
+                    for(ArrayList<BookSubmission> bookSubmission : intersection){
                           bookSubmissions.remove(bookSubmission);
                     }
                     }
@@ -285,5 +285,3 @@ public class SocketServer extends Thread{
                  
 
             
-            
-                

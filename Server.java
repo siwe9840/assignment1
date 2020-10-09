@@ -34,6 +34,7 @@ public class SocketServer extends Thread{
         try {
           dout = new PrintWriter(clientSocket.getOutputStream(), true);
           din = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+         System.out.println("before start running");
           startRunning();
         } catch (IOException e) {
             e.printStackTrace();
@@ -223,16 +224,22 @@ public class SocketServer extends Thread{
 
       public void startRunning()
       {
-            dout.println("Enter a request or 'Stop' to end session");
+    	  System.out.println("in start rnn");
+            dout.println("Enter a request or 'Stop' to end session \\r\\n\\\\EOF ");
                   dout.flush(); 
                   String line = "";
                   String serverMessage = "";
                  String clientMessage = "";
             try
             {
-                  
+                  System.out.println("Befre read line");
+                  dout.flush();
+                  System.out.println("after flush");
                   line = din.readLine(); 
+                  System.out.println("line (before while) : " + line );
+                  System.out.println("BEFRE WHILE LOPP");
                         while(line!=null){
+                        	System.out.println(line + "should be submission line ______");
                               while(!line.contains("\\EOF")){
                                     clientMessage = clientMessage.concat(line+"\r\n");
                                     line = din.readLine();

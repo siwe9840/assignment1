@@ -28,7 +28,7 @@ public class SocketServer extends Thread{
                   }
     }
 
-    public synchronized run() {
+    public synchronized void run() {
        this.isRunning = true; 
       System.out.println("Connection accepted. Thread is running.");
         try {

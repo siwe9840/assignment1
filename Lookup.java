@@ -1,4 +1,4 @@
-import java.util.*
+import java.util.*;
 
 public class Lookup{
 
@@ -7,12 +7,12 @@ public class Lookup{
           if(bookSubmission.getISBN().equals(ISBN)){
                 return bookSubmission;
             }
-            else{
+     
               return null;
-              }
+              
              }
     public static ArrayList<BookSubmission> lookup(ArrayList<BookSubmission> bookSubmissions, String value, String submit){
-              ArrayList<BookSubmission> books = new ArrayList<>():
+              ArrayList<BookSubmission> books = new ArrayList<>();
               for (BookSubmission bookSubmission : bookSubmissions){
                   if(value.equals("ISBN")){  
                       if(bookSubmission.getISBN().equals(submit)){
@@ -35,7 +35,7 @@ public class Lookup{
                         }
                   }
                   else if (value.equals("YEAR")){
-                      if(bookSubmission.getYear().equals(submit)){
+                      if(Integer.toString(bookSubmission.getYear()).equals(submit)){
                             books.add(bookSubmission);
                         }
                   }
@@ -45,6 +45,7 @@ public class Lookup{
                   return books; 
              
              }
-             
+             return books;
              }
+}
      

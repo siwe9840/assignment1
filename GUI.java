@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 public class GUI extends JFrame{
 	/*--------------------------------
   Have NOT tested with the other files 
@@ -66,8 +67,11 @@ public class GUI extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(300,300);
 		setVisible(true);
+		
+		layoutView();
+	
         socketClient = new SocketClient();
-        layoutView();
+        
     }
 	public void settingFonts() {
 		
@@ -90,6 +94,7 @@ public class GUI extends JFrame{
 	this.add(IP_label);
 	this.add(IPtxt);
 	this.add(Port_label);
+
 
 
 	this.add(PORTtxt);
@@ -125,6 +130,8 @@ public class GUI extends JFrame{
 	}
 	
 	public void SubmitButtonHandler(ActionEvent e) {
+		System.out.println("Submit pressed");
+		System.out.println(REQUESTtxt.getText());
 		  String ISBN = ISBNtxt.getText().trim();
           // Handle Title
           String TITLE = TITLEtxt.getText().trim();
@@ -145,18 +152,39 @@ public class GUI extends JFrame{
         	//String[] reqData = {ISBN, TITLE, AUTHOR, PUBLISHER, YEAR};
         
           //send request and update response box with server response
-		if(REQUESTtxt.getText().toLowerCase().trim() == "submit") {
+		if(REQUESTtxt.getText().toLowerCase().trim().equals( "submit")) {
 		
-			RESPONSEtxt.setText(socketClient.sendMessage(Request.SUBMIT, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
+			try {
+				System.out.println("submit type");
+				RESPONSEtxt.setText(socketClient.sendMessage(Request.SUBMIT, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		if(REQUESTtxt.getText().toLowerCase().trim() == "get") {
-			RESPONSEtxt.setText(socketClient.sendMessage(Request.GET, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
+			try {
+				RESPONSEtxt.setText(socketClient.sendMessage(Request.GET, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		if(REQUESTtxt.getText().toLowerCase().trim() == "remove") {
-			RESPONSEtxt.setText(socketClient.sendMessage(Request.REMOVE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
+			try {
+				RESPONSEtxt.setText(socketClient.sendMessage(Request.REMOVE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		if(REQUESTtxt.getText().toLowerCase().trim() == "update") {
-			RESPONSEtxt.setText(socketClient.sendMessage(Request.UPDATE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
+			try {
+				RESPONSEtxt.setText(socketClient.sendMessage(Request.UPDATE, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, true ));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 		}
 		
@@ -173,12 +201,17 @@ public class GUI extends JFrame{
 	}
 	
 	public void ConnectButtonHandler(ActionEvent e){
-		socketClient.connect(IPtxt, Integer.parseInt(PORTtxt.getText()));
+		socketClient.connect(IPtxt.getText(), Integer.parseInt(PORTtxt.getText()));
 		
 	}
 	
 	public void DisconnectButtonHandler(ActionEvent e) {
-		socketClient.stopConnection();	
+		try {
+			socketClient.stopConnection();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
 	}
 
 	

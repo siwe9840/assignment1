@@ -95,13 +95,5 @@ public String getServerResponse{
 	return serverResponse;
 
 }
-	
-	
-public class mainClient{
-	public static void main(String[] args){
-		new GUI();
-			
-	}
-	}
-	
+
 	

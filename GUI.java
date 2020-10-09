@@ -58,7 +58,14 @@ public class GUI extends JFrame{
 	public JLabel YEARlabel = new JLabel("YEAR: ", SwingConstants.LEFT);
 
 	
-
+    public GUI() {
+       // setTitle("CP372 Assignment 1 App");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(300,300);
+		setVisible(true);
+        socketClient = new SocketClient();
+        layoutView();
+    }
 	public void settingFonts() {
 		
 		//this.go.setFont(new Font("Verdana", Font.PLAIN, 18));
@@ -120,10 +127,10 @@ public class GUI extends JFrame{
           // Handle Publisher
           String PUBLISHER = PUBLISHERtxt.getText().trim();
           // Handle Year
-          String YEAR = YEARtxt.getText().trim();
+          int YEAR = 0;
           if (YEARtxt.getText().length() > 0)
               try {
-                  int YEAR = Integer.parseInt(YEARtxt.getText());
+                   YEAR = Integer.parseInt(YEARtxt.getText());
               } catch (NumberFormatException exception) {
                   JOptionPane.showMessageDialog(this, "Invalid Year", "Error", JOptionPane.ERROR_MESSAGE);
                   return;

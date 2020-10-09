@@ -171,6 +171,15 @@ public class GUI extends JFrame{
 		YEARtxt.setText("");
 
 	}
+	
+	public void ConnectButtonHandler(ActionEvent e){
+		socketClient.connect(IPtxt, ParseInt(PORTtxt));
+		
+	}
+	
+	public void DisconnectButtonHandler(ActionEvent e) {
+		socketClient.stopConnection();	
+	}
 
 	
 	public void layoutView() {
@@ -182,6 +191,8 @@ public class GUI extends JFrame{
 		
 		SubmitButton.addActionListener(this::SubmitButtonHandler);
 		Clear.addActionListener(this::ClearButtonHandler);
+		Connect.addActionListener(this::ConnectButtonHandler);
+		Disconnect.addActionListener(this::DisconnectButtonHandler);
 		this.setTitle("Server GUI");
 	
 		

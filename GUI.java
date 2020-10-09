@@ -173,7 +173,7 @@ public class GUI extends JFrame{
 	}
 	
 	public void ConnectButtonHandler(ActionEvent e){
-		socketClient.connect(IPtxt, ParseInt(PORTtxt));
+		socketClient.connect(IPtxt, Integer.parseInt(PORTtxt.getText()));
 		
 	}
 	

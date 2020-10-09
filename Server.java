@@ -227,7 +227,7 @@ public class SocketServer extends Thread{
                   dout.flush(); 
                   String line = "";
                   String serverMessage = "";
-                  String[] clientMessage = "";
+                 String clientMessage = "";
             try
             {
                   
@@ -238,21 +238,22 @@ public class SocketServer extends Thread{
                                     line = din.readLine();
                               }
                               
-                              String request = clientMessage[0].trim();
-                              clientMessage = clientMessage.split(("\n").trim()+"\r\n\\EOF");
+                              String [] cMessageArray = clientMessage.split(("\n").trim()+"\r\n\\EOF");
+                              String request = cMessageArray[0].trim();
+
                               if(request.equals("SUBMIT")){
-                                    serverMessage = submitRequest(clientMessage);
+                                    serverMessage = submitRequest(cMessageArray);
 
                               }
                               else if(request.equals("UPDATE")){
-                                    serverMessage = updateRequest(clientMessage);
+                                    serverMessage = updateRequest(cMessageArray);
 
                               }
                               else if(request.equals("GET")){
-                                    serverMessage = getRequest(clientMessage);
+                                    serverMessage = getRequest(cMessageArray);
                               }
                               else if(request.equals("REMOVE")){
-                                    serverMessage = removeRequest(clientMessage);
+                                    serverMessage = removeRequest(cMessageArray);
                               }
                              else if(request.equals("")){
                                     dout.println("No request identified.");

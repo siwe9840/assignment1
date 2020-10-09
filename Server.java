@@ -4,10 +4,10 @@ import java.util.*;
 
 public class SocketServer extends Thread{
       private final ArrayList<BookSubmission> bookSubmissions;
-      private final ClientSocket clientSocket;
+      private final Socket clientSocket;
       private boolean isRunning= false;
 
-    public SocketServer(ClientSocket clientSocket, ArrayList<BookSubmission> bookSubmissions ){
+    public SocketServer(Socket clientSocket, ArrayList<BookSubmission> bookSubmissions ){
         this.clientSocket = clientSocket;
         this.bookSubmissions = bookSubmissions; 
     }
@@ -17,8 +17,8 @@ public class SocketServer extends Thread{
          try{
               din.close();
               dout.close();
-              serverSocket.close(); 
-        this.interrupt();
+              clientSocket.close(); 
+             this.interrupt();
           }
            catch( Exception e){
                   System.out.println("Connection was not properly closed"); 
@@ -26,7 +26,7 @@ public class SocketServer extends Thread{
                   }
     }
 
-    private void run() {
+    public void run() {
        this.isRunning = true; 
       System.out.println("Connection accepted. Thread is running.");
         try {
@@ -276,31 +276,30 @@ public class SocketServer extends Thread{
                   }
               }
 
-                 
+            
                   
  public class mainServer{
        
       public static void main(String[] args) throws IOException{
             
-            int port
-            if(args[0].length ==0) {
+            int port;
+            if(args[0].length() ==0) {
             port =5000;
             }
             else{
-                  port = Integer.parseInt(arg[0]);
+                  port = Integer.parseInt(args[0]);
             }
-            ServerSocket serverSocket = new ServerSocket(port)
-            while(something){
-            run(serverSocket);
+            ServerSocket serverSocket = new ServerSocket(port);
+            start(serverSocket);
             }
    
-       }
-      public void run(Serversocket serverSocket){
+       
+      public static void start(ServerSocket serverSocket){
            ArrayList<BookSubmission> bookSubmissions = new ArrayList<BookSubmission>();
 
             try{
                   System.out.println("Waiting to be connected");
-                  ClientSocket clientSocket = serverSocket.accept();
+                  Socket clientSocket = serverSocket.accept();
                   SocketServer socketServer = new SocketServer(clientSocket, bookSubmissions);
                   socketServer.start();
             

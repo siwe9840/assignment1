@@ -22,7 +22,7 @@ public class SocketClient
 	 	try
 		{
 		System.out.println("Conneting to server " +location+ " on port " + port);
-		Socket clientSocket = new Socket():
+		Socket clientSocket = new Socket();
 		SocketAddress socketAddress = new InetSocketAddress(location,port);
 		clientSocket.connect(socketAddress);
 		 din = new DataInputStream(clientSocket.getInputStream());
@@ -69,11 +69,12 @@ public class SocketClient
 		*/
 		return requestData;	
         }
-	catch(Exception e)
+	catch(IOException e)
 	{
 		e.printStackTrace(); 		
         }	
-        }
+        
+
 public String sendMessage( Request request, String ISBN, String TITLE, String AUTHOR, String PUBLISHER, int YEAR,
                               boolean all){
 	String processedRequest = processRequest(request, ISBN, TITLE, AUTHOR, PUBLISHER, YEAR, all);
@@ -84,7 +85,7 @@ public String sendMessage( Request request, String ISBN, String TITLE, String AU
 	
 
 }
-public String getServerResponse{
+public String getServerResponse(){
 	String serverResponse = "";
 	String line = din.readLine();
 	
@@ -94,6 +95,7 @@ public String getServerResponse{
 		}
 	return serverResponse;
 
+}
 }
 
 	

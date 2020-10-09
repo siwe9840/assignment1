@@ -9,9 +9,10 @@
             }
             else{
                   port = Integer.parseInt(args[0]);
-            }
+            }          
+       ServerSocket serverSocket = new ServerSocket(port);
+
            while(true){
-            ServerSocket serverSocket = new ServerSocket(port);
             start(serverSocket, bookSubmissions);
             }
       }

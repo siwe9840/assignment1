@@ -1,7 +1,8 @@
  public class mainServer{
        
       public static void main(String[] args) throws IOException{
-            
+            ArrayList<BookSubmission> bookSubmissions = new ArrayList<BookSubmission>();
+
             int port;
             if(args[0].length() ==0) {
             port =5000;
@@ -9,13 +10,14 @@
             else{
                   port = Integer.parseInt(args[0]);
             }
+           while(true){
             ServerSocket serverSocket = new ServerSocket(port);
-            start(serverSocket);
+            start(serverSocket, bookSubmissions);
             }
+      }
    
        
-      public static void start(ServerSocket serverSocket){
-           ArrayList<BookSubmission> bookSubmissions = new ArrayList<BookSubmission>();
+      public static void start(ServerSocket serverSocket, ArrayList<BookSubmission>bookSubmissions){
 
             try{
                   System.out.println("Waiting to be connected");

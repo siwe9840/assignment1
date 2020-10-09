@@ -27,6 +27,9 @@ public class GUI extends JFrame{
 	//Buttons
 	public static JButton SubmitButton = new JButton("SUBMIT REQUEST");
 	public static JButton Clear= new JButton("CLEAR");
+	public static JButton Connect= new JButton("Connect");
+	public static JButton Disconnect= new JButton("Disconnect ");
+
 
 	
 	//TextFields
@@ -113,6 +116,9 @@ public class GUI extends JFrame{
 	this.add(Clear);
 	this.add(Response_label);
 	this.add(RESPONSEtxt);	
+	this.add(Connect);
+	this.add(Disconnect);
+		
 	
 
 		

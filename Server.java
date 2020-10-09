@@ -30,7 +30,8 @@ public class SocketServer extends Thread{
        this.isRunning = true; 
       System.out.println("Connection accepted. Thread is running.");
         try {
-          PrintWriter out = 
+          PrintWriter dout = new PrintWriter(clientSocket.getOutputStream(), true);
+          BufferedReader din = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
           startRunning();
         } catch (IOException e) {
             e.printStackTrace();

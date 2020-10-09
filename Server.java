@@ -6,6 +6,8 @@ public class SocketServer extends Thread{
       private final ArrayList<BookSubmission> bookSubmissions;
       private final Socket clientSocket;
       private boolean isRunning= false;
+      private BufferedReader din;
+      private PrintWriter dout; 
 
     public SocketServer(Socket clientSocket, ArrayList<BookSubmission> bookSubmissions ){
         this.clientSocket = clientSocket;
@@ -30,8 +32,8 @@ public class SocketServer extends Thread{
        this.isRunning = true; 
       System.out.println("Connection accepted. Thread is running.");
         try {
-          PrintWriter dout = new PrintWriter(clientSocket.getOutputStream(), true);
-          BufferedReader din = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+          dout = new PrintWriter(clientSocket.getOutputStream(), true);
+          din = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
           startRunning();
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,24 +84,24 @@ public class SocketServer extends Thread{
             BookSubmission book = null;
             for (String line : requestData){
                   line = line.trim();
-                  String [] data = line.split(" ");
+                  String[] data = line.split(" ");
                   String submit = line.substring(data[0].length()).trim();
                   if (data[0].equals("ISBN")){
                         book = Lookup.lookupISBN(bookSubmissions, submit);
                         }
                  
                   if (book!=null){
-                        if (data[0].equals("TITLE") && submit.length()>=1){
+                        if (data[0].equals("TITLE")){
                               book.setTitle(submit);
                         }
-                        else if (data[0].equals("AUTHOR") && submit.length()>=1){
+                        else if (data[0].equals("AUTHOR")){
                               book.setAuthor(submit);
                         }
                         
-                       else if (data[0].equals("PUBLISHER") && submit.length()>=1){
+                       else if (data[0].equals("PUBLISHER")){
                              book.setPublisher(submit);
                        }
-                      else if (data[0].equals("YEAR") && submit.length()>=1){
+                      else if (data[0].equals("YEAR")){
                                book.setYEAR(Integer.parseInt(data[1]));
                      }
                         }
@@ -221,13 +223,14 @@ public class SocketServer extends Thread{
 
       public void startRunning()
       {
-            try
-            {
-                  dout.println("Enter a request or 'Stop' to end session");
+            dout.println("Enter a request or 'Stop' to end session");
                   dout.flush(); 
                   String line = "";
                   String serverMessage = "";
-                  String clientMessage = "";
+                  String[] clientMessage = "";
+            try
+            {
+                  
                   line = din.readLine(); 
                         while(line!=null){
                               while(!line.contains("\\EOF")){

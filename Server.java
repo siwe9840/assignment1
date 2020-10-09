@@ -271,7 +271,7 @@ public class SocketServer extends Thread{
                               
                         dout.println(serverMessage);
                         dout.flush(); 
-                        line = in.readLine(); 
+                        line = din.readLine(); 
                                                  
                         }   
                             }catch (IOException e){

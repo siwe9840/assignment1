@@ -46,6 +46,7 @@ public class SocketServer extends Thread{
             String submit = "";
             BookSubmission bookSubmission = new BookSubmission();
             for (String line : requestData){
+                  line = line.trim(); 
                   String[] data = line.split(" "); 
                   if (data[0].equals("ISBN")){
                         if(Lookup.lookupISBN(bookSubmissions, data[1] )!= null){
@@ -72,10 +73,9 @@ public class SocketServer extends Thread{
                                bookSubmission.setYEAR(Integer.parseInt(data[1]));
                      }
                         }
-                        
+                     bookSubmissions.add(bookSubmission); 
                             
                      serverMessage = ("The entry has been added to the bibliography successfully.");
-                     bookSubmissions.add(bookSubmission); 
                      return serverMessage;  
                      }
                   
